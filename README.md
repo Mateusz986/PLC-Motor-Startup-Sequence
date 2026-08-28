@@ -33,3 +33,17 @@ stateDiagram-v2
 | `WorkingState` | Silnik pracuje | `xMotorRun` |
 | `IssuesState` | Stan awaryjny — wszystko wyłączone | — |
 
+## **Wejścia/Wyjścia(I/O)**
+### Zmienne
+
+| Zmienna | Typ | Opis |
+| :--- | :--- | :--- |
+| `xStartBtn` | BOOL (impuls) | Uruchomienie sekwencji |
+| `xStopBtn` | BOOL (impuls) | Zatrzymanie, powrót do oczekiwania |
+| `xFaultSensor` | BOOL | Sygnał awarii z czujnika |
+| `xResetBtn` | BOOL (impuls) | Kasowanie awarii (działa tylko gdy `xFaultSensor` = FALSE) |
+| `xValveConfirm` | BOOL | Potwierdzenie otwarcia zaworu |
+| `xPumpOn` | BOOL (wyjście) | Sterowanie pompą oleju |
+| `xValveOpen` | BOOL (wyjście) | Sterowanie zaworem paliwa |
+| `xMotorRun` | BOOL (wyjście) | Sterowanie silnikiem |
+
