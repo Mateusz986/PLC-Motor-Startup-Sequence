@@ -4,7 +4,7 @@ Automat stanów (state machine) sterujący sekwencją rozruchową silnika przemy
 <img width="911" height="445" alt="image" src="https://github.com/user-attachments/assets/80f450a4-1ef4-4a57-8106-5c0408428d99" />
 
 ## **Dlaczego kolejność ma znaczenie**
-To nie jest przypadkowa sekwencja - odzwierciedla realną logikę bezpieczeństwa silników przemysłowych: najpierw ustawić smarowanie silnika, by zapobiec awarii, a następnie wpuścić paliwo. Uruchomienie silnika bez ustalonego ciśnienia oleju grozi zatarciem. Timer 5s w stanie pompy oleju zapobiega temu symulując czas ustalenia smarowania.
+To nie jest przypadkowa sekwencja, odzwierciedla realną logikę bezpieczeństwa silników przemysłowych: najpierw ustawić smarowanie silnika, by zapobiec awarii, a następnie wpuścić paliwo. Uruchomienie silnika bez ustalonego ciśnienia oleju grozi zatarciem. Timer 5s w stanie pompy oleju zapobiega temu symulując czas ustalenia smarowania.
 
 ## **Diagram stanów**
 
