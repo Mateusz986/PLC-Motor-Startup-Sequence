@@ -22,3 +22,14 @@ stateDiagram-v2
     IssuesState --> WaitingState : xResetBtn AND NOT xFaultSensor
 ```
 
+## **Stany**
+### Stany
+
+| Stan | Opis | Aktywne wyjścia |
+| :--- | :--- | :--- |
+| `WaitingState` | Oczekiwanie na start | — |
+| `OilPumpState` | Uruchomienie pompy oleju, timer 5s | `xPumpOn` |
+| `ValveState` | Otwarcie zaworu paliwa, oczekiwanie na potwierdzenie (timeout 30s) | `xValveOpen` |
+| `WorkingState` | Silnik pracuje | `xMotorRun` |
+| `IssuesState` | Stan awaryjny — wszystko wyłączone | — |
+
