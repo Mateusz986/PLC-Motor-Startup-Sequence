@@ -1,0 +1,87 @@
+PROGRAM PLC_PRG
+VAR
+	MachineState : (WaitingState, OilPumpState, ValveState, WorkingState, IssuesState) := WaitingState;
+	
+	sStateName : STRING;
+	xStartBtn : BOOL;
+	xStopBtn : BOOL;
+	xPumpOn : BOOL;
+	xValveOpen : BOOL;
+	xMotorRun : BOOL;
+	xFaultSensor : BOOL;
+	xResetBtn : BOOL;
+	tmrOilDelay : TON;
+	xValveConfirm : BOOL;
+	tmrValveTimer : TON;
+	
+END_VAR
+
+sStateName := TO_STRING(MachineState);
+
+CASE MachineState OF
+	WaitingState: //Waiting
+		xValveConfirm := FALSE;
+		sStateName := 'WaitingState';
+		tmrValveTimer(IN := FALSE);
+		xPumpOn := FALSE;
+		xValveOpen := FALSE;
+		xMotorRun := FALSE;
+		tmrOilDelay(IN := FALSE);
+		IF xStartBtn THEN
+			MachineState := OilPumpState;
+		END_IF
+	OilPumpState:	//STARTING OIL PUMP
+		xValveConfirm := FALSE;
+		sStateName := 'OilPumpState';
+		xStartBtn := FALSE;
+		xPumpOn := TRUE;
+		tmrOilDelay(IN := TRUE, PT := T#5S);
+		IF tmrOilDelay.Q THEN
+			MachineState := ValveState;
+		END_IF
+		
+		IF xStopBtn THEN
+			xStopBtn := FALSE;
+			MachineState := WaitingState;
+		END_IF
+	ValveState:	//Open Valve Petrol
+		sStateName := 'ValveState';
+		xValveOpen := TRUE;
+		tmrValveTimer(IN := TRUE, PT := T#30S);
+		IF xValveConfirm THEN
+			tmrValveTimer(IN := FALSE);
+			MachineState := WorkingState;
+		ELSIF tmrValveTimer.Q THEN
+				MachineState := IssuesState;
+		END_IF
+		
+		
+		IF xStopBtn THEN
+			xStopBtn := FALSE;
+			MachineState := WaitingState;
+			
+		END_IF
+		
+	WorkingState: //Starting engine
+		sStateName := 'WorkingState';
+		xValveConfirm := FALSE;
+		xMotorRun := TRUE;
+		
+		IF xStopBtn THEN
+			xStopBtn := FALSE;
+			MachineState := WaitingState;
+		END_IF
+		
+		IF xFaultSensor THEN
+			MachineState := IssuesState;
+		END_IF
+	IssuesState: //IssueState
+		sStateName := 'IssuesState';
+		xMotorRun := FALSE;
+		xPumpOn := FALSE;
+		xValveOpen := FALSE;
+		IF NOT xFaultSensor AND xResetBtn THEN
+			xResetBtn := FALSE;
+			 MachineState := WaitingState;
+		END_IF
+END_CASE
