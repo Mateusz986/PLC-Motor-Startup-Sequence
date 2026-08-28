@@ -34,7 +34,6 @@ stateDiagram-v2
 | `IssuesState` | Stan awaryjny — wszystko wyłączone | — |
 
 ## **Wejścia/Wyjścia(I/O)**
-### Zmienne
 
 | Zmienna | Typ | Opis |
 | :--- | :--- | :--- |
@@ -47,3 +46,19 @@ stateDiagram-v2
 | `xValveOpen` | BOOL (wyjście) | Sterowanie zaworem paliwa |
 | `xMotorRun` | BOOL (wyjście) | Sterowanie silnikiem |
 
+## **Znaleziony i naprawiony błąd(Race condition xValveConfirm)
+
+Podczas testowania odkryłem, że jeśli sygnał `xValveConfirm` zostanie ustawiony na TRUE zanim maszyna faktycznie dotrze do stanu `ValveState` (np. przez sygnał trwały, taki jak realny czujnik krańcowy, w przeciwieństwie do impulsowego przycisku HMI), automat natychmiast przeskakiwał przez cały stan zaworu jakby zawór otworzył się i potwierdził w 0 ms.
+
+Problem wynikał z tego, że flaga `xValveConfirm` nie była czyszczona przy wejściu do stanów poprzedzających. Naprawa: dodanie `xValveConfirm := FALSE` na wejściu do `WaitingState` i `OilPumpState`, tak aby liczyła się wyłącznie wartość ustawiona realnie w trakcie stanu `ValveState`, nie wcześniej.
+
+Ta poprawka pokazuje różnicę między kodem, który "działa" przy normalnym testowaniu przyciskami, a kodem odpornym na inny charakter sygnału wejściowego (impuls vs stan trwały) istotne rozróżnienie przy pracy z realnymi czujnikami przemysłowymi.
+
+## **Środowisko**
+
+* CODESYS Development System V3
+* Język: Structured Text (ST)
+* Testowane w symulatorze (bez fizycznego sterownika)
+
+## **Autor**
+Bąk Mateusz
