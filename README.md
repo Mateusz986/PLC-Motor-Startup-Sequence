@@ -46,7 +46,7 @@ stateDiagram-v2
 | `xValveOpen` | BOOL (wyjście) | Sterowanie zaworem paliwa |
 | `xMotorRun` | BOOL (wyjście) | Sterowanie silnikiem |
 
-## **Znaleziony i naprawiony błąd(Race condition xValveConfirm)
+## **Znaleziony i naprawiony błąd(Race condition xValveConfirm)**
 
 Podczas testowania odkryłem, że jeśli sygnał `xValveConfirm` zostanie ustawiony na TRUE zanim maszyna faktycznie dotrze do stanu `ValveState` (np. przez sygnał trwały, taki jak realny czujnik krańcowy, w przeciwieństwie do impulsowego przycisku HMI), automat natychmiast przeskakiwał przez cały stan zaworu jakby zawór otworzył się i potwierdził w 0 ms.
 
