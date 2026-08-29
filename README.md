@@ -1,5 +1,5 @@
 # **PLC-Motor-Startup-Sequence**
-Automat stanów (state machine) sterujący sekwencją rozruchową silnika przemysłowego, napisany w języku Structured Text (ST) w środowisku CODESYS. Projekt symuluje realną logikę bezpiecznego uruchamiania maszyny: pompa oleju → zawór paliwa → praca, z obsługą awarii i wizualizacją HMI.
+Automat stanów (state machine) sterujący sekwencją rozruchową silnika przemysłowego, napisany w języku Structured Text (ST) w środowisku CODESYS. Projekt symuluje realną logikę bezpiecznego uruchamiania maszyny: pompa oleju, zawór paliwa, prac. Z obsługą awarii i wizualizacją HMI.
 
 <img width="911" height="445" alt="image" src="https://github.com/user-attachments/assets/80f450a4-1ef4-4a57-8106-5c0408428d99" />
 
