@@ -23,7 +23,6 @@ stateDiagram-v2
 ```
 
 ## **Stany**
-### Stany
 
 | Stan | Opis | Aktywne wyjścia |
 | :--- | :--- | :--- |
